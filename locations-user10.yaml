@@ -1,0 +1,150 @@
+---
+openapi: 3.0.2
+info:
+  title: locations-user10
+  version: 1.0.0
+  description: Locations API
+paths:
+  /locations:
+    summary: Path used to manage the list of locations.
+    description: "The REST endpoint/path used to list and create zero or more `location`\
+      \ entities.  This path contains a `GET` and `POST` operation to perform the\
+      \ list and create tasks, respectively."
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/location'
+              examples:
+                all:
+                  value:
+                  - id: 1
+                    name: International Inc Corporate Office
+                    location:
+                      lat: 51.5013673
+                      lng: -0.1440787
+                    type: headquarter
+                    status: "1"
+                  - id: 2
+                    name: International Inc North America
+                    location:
+                      lat: 40.6976701
+                      lng: -74.259876
+                    type: office
+                    status: "1"
+                  - id: 3
+                    name: International Inc France
+                    location:
+                      lat: 48.859
+                      lng: 2.2069746
+                    type: office
+                    status: "1"
+          description: Successful response - returns an array of `location` entities.
+      operationId: getlocations
+      summary: List All locations
+      description: Gets a list of all `location` entities.
+    post:
+      requestBody:
+        description: A new `location` to be created.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/location'
+        required: true
+      responses:
+        "201":
+          description: Successful response.
+      operationId: createlocation
+      summary: Create a location
+      description: Creates a new instance of a `location`.
+  /locations/{locationId}:
+    summary: Path used to manage a single location.
+    description: "The REST endpoint/path used to get, update, and delete single instances\
+      \ of an `location`.  This path contains `GET`, `PUT`, and `DELETE` operations\
+      \ used to perform the get, update, and delete tasks, respectively."
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/location'
+              examples:
+                get 47:
+                  value:
+                    id: 47
+                    name: Some place
+                    location:
+                      lat: 6.19
+                      lng: 89.8
+                    type: building
+                    status: closed
+          description: Successful response - returns a single `location`.
+      operationId: getlocation
+      summary: Get a location
+      description: Gets the details of a single instance of a `location`.
+    put:
+      requestBody:
+        description: Updated `location` information.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/location'
+        required: true
+      responses:
+        "202":
+          description: Successful response.
+      operationId: updatelocation
+      summary: Update a location
+      description: Updates an existing `location`.
+    delete:
+      responses:
+        "204":
+          description: Successful response.
+      operationId: deletelocation
+      summary: Delete a location
+      description: Deletes an existing `location`.
+    parameters:
+    - name: locationId
+      description: A unique identifier for a `location`.
+      schema:
+        type: string
+      in: path
+      required: true
+components:
+  schemas:
+    location:
+      title: Root Type for location
+      description: Location data type
+      type: object
+      properties:
+        id:
+          format: int32
+          type: integer
+        name:
+          type: string
+        location:
+          type: object
+          properties:
+            lat:
+              format: double
+              type: number
+            lng:
+              format: double
+              type: number
+        type:
+          type: string
+        status:
+          type: string
+      example:
+        id: 1
+        name: International Inc Corporate Office
+        location:
+          lat: 51.5013673
+          lng: -0.1440787
+        type: headquarter
+        status: "1"
