@@ -81,7 +81,7 @@ paths:
                     location:
                       lat: 6.19
                       lng: 89.8
-                    type: building
+                    type: hq
                     status: closed
           description: Successful response - returns a single `location`.
       operationId: getlocation
